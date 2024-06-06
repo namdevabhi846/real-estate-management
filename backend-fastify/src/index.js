@@ -61,7 +61,7 @@ mongoose
     useNewUrlParser: true,
   })
   .then(() => {
-    const PORT = process.env.PORT || 5000;
+    const PORT = process.env.PORT || 8000;
     try {
       fastify.listen(
         {
