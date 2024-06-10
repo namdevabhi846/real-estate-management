@@ -26,20 +26,20 @@ pipeline {
         FRONTEND_REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${FRONTEND_REPO_NAME}"
         BACKEND_REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${BACKEND_REPO_NAME}"
         DEPLOY_SERVER_IP="50.18.117.234"
-       // GIT_REPO_URL="https://github.com/namdevabhi846/real-estate-management.git"
+        GIT_REPO_URL="https://github.com/namdevabhi846/real-estate-management.git"
     }
 
-    //stages {
-      //  stage('Clone Repository') {
-        //    steps {
-          //      script {
-            //        sh "git clone ${GIT_REPO_URL} real-estate"
-              //      dir('real-estate') {
-                //        sh "git checkout ${BRANCH_NAME}"
-                  //  }
-               // }
-            //}
-       // }
+    stages {
+        stage('Clone Repository') {
+            steps {
+                script {
+                    sh "git clone ${GIT_REPO_URL} estate"
+                    dir('estate') {
+                        sh "git checkout ${BRANCH_NAME}"
+                    }
+                }
+            }
+        }
  
         stage('Logging into AWS ECR') {
             steps {
