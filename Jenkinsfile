@@ -48,8 +48,8 @@ pipeline {
             steps{
                 script {
                     env.git_commit_sha = sh(script: 'git rev-parse --short=6 HEAD', returnStdout: true).trim( )
-                    sh "docker build -t ${FRONTEND_REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha} ."
-                    sh "docker build -t ${BACKEND_REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha} ."
+                    sh "docker build -t ${FRONTEND_REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha} /home/ubuntu/real-estate-management/frontend/"
+                    sh "docker build -t ${BACKEND_REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha} /home/ubuntu/real-estate-management/backend-fastify/"
                 }
             }
         }
