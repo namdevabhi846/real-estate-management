@@ -33,8 +33,8 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 script {
-                    sh "git clone ${GIT_REPO_URL} estate"
-                    dir('estate') {
+                    sh "git clone ${GIT_REPO_URL} managemant"
+                    dir('managemant') {
                         sh "git checkout ${BRANCH_NAME}"
                     }
                 }
