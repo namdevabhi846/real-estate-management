@@ -36,6 +36,7 @@ pipeline {
                     sh "git clone ${GIT_REPO_URL} real-estate"
                     dir('real-estate') {
                         sh "git checkout ${BRANCH_NAME}"
+                        sh "ls -a"
                     }
                 }
             }
