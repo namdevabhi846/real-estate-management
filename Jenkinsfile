@@ -40,24 +40,17 @@ pipeline {
                 }
             }
         }
-    }
- 
-    stages {
  
         stage('Logging into AWS ECR') {
             steps {
                 script {
-                    
-                    
                     sh "aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com"
                     sh "docker images -a -q | xargs docker rmi -f || true"
                 }
- 
             }
         }
  
- 
- // Building Docker images
+        // Building Docker images
         stage('Building image') {
             steps{
                 script {
@@ -68,7 +61,7 @@ pipeline {
             }
         }
  
- // Uploading Docker images into AWS ECR
+        // Uploading Docker images into AWS ECR
         stage('Pushing to ECR') {
             steps{ 
                 script {
@@ -78,7 +71,7 @@ pipeline {
             }
         }
 
- //Creating container 
+        //Creating container 
         stage('creating container for real-estate-managemant') {
             steps{ 
                 script {
@@ -88,7 +81,6 @@ pipeline {
                     sh "ssh ubuntu@${DEPLOY_SERVER_IP} sudo docker images -a -q | xargs docker rmi -f || true"
                     sh "ssh ubuntu@${DEPLOY_SERVER_IP} sudo docker run -itd --name ${FRONTEND_REPO_NAME}-${BRANCH_NAME} -p 4200:4200 --restart always ${FRONTEND_REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha}"
                     sh "ssh ubuntu@${DEPLOY_SERVER_IP} sudo docker run -itd --name ${BACKEND_REPO_NAME}-${BRANCH_NAME} -p 8000:8000 --restart always ${BACKEND_REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha}"
-
                 }
             }
         }
