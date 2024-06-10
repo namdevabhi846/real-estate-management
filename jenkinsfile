@@ -25,7 +25,7 @@ pipeline {
         BACKEND_REPO_NAME="abhi-backend"
         FRONTEND_REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${FRONTEND_REPO_NAME}"
         BACKEND_REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${BACKEND_REPO_NAME}"
-        DEPLOY-SERVER-IP="50.18.117.234"
+        DEPLOY_SERVER_IP="50.18.117.234"
     }
  
     stages {
@@ -68,12 +68,12 @@ pipeline {
         stage('creating container for real-estate-managemant') {
             steps{ 
                 script {
-                    sh "ssh ubuntu@${DEPLOY-SERVER-IP} /home/ubuntu/login-ecr.sh"             
-                    sh "ssh ubuntu@${DEPLOY-SERVER-IP} sudo docker rm -f ${FRONTEND_REPO_NAME}-${BRANCH_NAME} || true"
-                    sh "ssh ubuntu@${DEPLOY-SERVER-IP} sudo docker rm -f ${BACKEND_REPO_NAME}-${BRANCH_NAME} || true"
-                    sh "ssh ubuntu@${DEPLOY-SERVER-IP} sudo docker images -a -q | xargs docker rmi -f || true"
-                    sh "ssh ubuntu@${DEPLOY-SERVER-IP} sudo docker run -itd --name ${FRONTEND_REPO_NAME}-${BRANCH_NAME} -p 4200:4200 --restart always ${FRONTEND_REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha}"
-                    sh "ssh ubuntu@${DEPLOY-SERVER-IP} sudo docker run -itd --name ${BACKEND_REPO_NAME}-${BRANCH_NAME} -p 8000:8000 --restart always ${BACKEND_REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha}"
+                    sh "ssh ubuntu@${DEPLOY_SERVER_IP} /home/ubuntu/login-ecr.sh"             
+                    sh "ssh ubuntu@${DEPLOY_SERVER_IP} sudo docker rm -f ${FRONTEND_REPO_NAME}-${BRANCH_NAME} || true"
+                    sh "ssh ubuntu@${DEPLOY_SERVER_IP} sudo docker rm -f ${BACKEND_REPO_NAME}-${BRANCH_NAME} || true"
+                    sh "ssh ubuntu@${DEPLOY_SERVER_IP} sudo docker images -a -q | xargs docker rmi -f || true"
+                    sh "ssh ubuntu@${DEPLOY_SERVER_IP} sudo docker run -itd --name ${FRONTEND_REPO_NAME}-${BRANCH_NAME} -p 4200:4200 --restart always ${FRONTEND_REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha}"
+                    sh "ssh ubuntu@${DEPLOY_SERVER_IP} sudo docker run -itd --name ${BACKEND_REPO_NAME}-${BRANCH_NAME} -p 8000:8000 --restart always ${BACKEND_REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha}"
 
                 }
             }
