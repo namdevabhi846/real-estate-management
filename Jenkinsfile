@@ -3,13 +3,13 @@ pipeline {
 
     environment {
         AWS_ACCOUNT_ID="979022608152"
-        AWS_DEFAULT_REGION="us-west-1"
+        AWS_DEFAULT_REGION="ap-south-1"
         BRANCH_NAME="main"
         FRONTEND_REPO_NAME="abhi-frontend"
         BACKEND_REPO_NAME="abhi-backend"
         FRONTEND_REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${FRONTEND_REPO_NAME}"
         BACKEND_REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${BACKEND_REPO_NAME}"
-        DEPLOY_SERVER_IP="54.177.103.217"
+        DEPLOY_SERVER_IP="13.202.47.31"
     }
 
     stages {
