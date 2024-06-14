@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        AWS_ACCOUNT_ID="979022608152"
+        AWS_ACCOUNT_ID="637423400986"
         AWS_DEFAULT_REGION="ap-south-1"
         BRANCH_NAME="main"
         FRONTEND_REPO_NAME="abhi-frontend"
