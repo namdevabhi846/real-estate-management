@@ -59,12 +59,12 @@ pipeline {
         success {
             mail to: "abhishek.namdev.cn@gmail.com",
                  subject: "Jenkins Build Successful:",
-                 body: "The build for "real-estate-project" was runs successful. Check it out "
+                 body: "The build for real-estate-project was runs successful. Check it out "
         }
         failure {
             mail to: "abhishek.namdev.cn@gmail.com",
                  subject: "Jenkins Build Failed:",
-                 body: "Somehow, the build for "real-estate-project" has failed. Check it out."
+                 body: "Somehow, the build for real-estate-project has failed. Check it out."
         }
     }
 }
