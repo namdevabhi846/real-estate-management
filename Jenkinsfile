@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     environment {
-        AWS_ACCOUNT_ID="637423400986"
-        AWS_DEFAULT_REGION="ap-south-1"
-        BRANCH_NAME="main"
-        FRONTEND_REPO_NAME="abhi-frontend"
-        BACKEND_REPO_NAME="abhi-backend"
+        AWS_ACCOUNT_ID = "637423400986"
+        AWS_DEFAULT_REGION = "ap-south-1"
+        BRANCH_NAME = "main"
+        FRONTEND_REPO_NAME = "abhi-frontend"
+        BACKEND_REPO_NAME = "abhi-backend"
         FRONTEND_REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${FRONTEND_REPO_NAME}"
         BACKEND_REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${BACKEND_REPO_NAME}"
-        DEPLOY_SERVER_IP="13.202.47.31"
+        DEPLOY_SERVER_IP = "13.202.47.31"
         EMAIL_ADD = "abhishek.namdev.cn@gmail.com"
     }
 
@@ -22,7 +22,7 @@ pipeline {
                 }
             }
         }
- 
+
         stage('Building image') {
             steps {
                 script {
@@ -32,7 +32,7 @@ pipeline {
                 }
             }
         }
- 
+
         stage('Pushing to ECR') {
             steps {
                 script {
@@ -45,7 +45,7 @@ pipeline {
         stage('Creating container for real-estate-management') {
             steps {
                 script {
-                    sh "ssh ubuntu@${DEPLOY_SERVER_IP} /home/ubuntu/login-ecr.sh"             
+                    sh "ssh ubuntu@${DEPLOY_SERVER_IP} /home/ubuntu/login-ecr.sh"
                     sh "ssh ubuntu@${DEPLOY_SERVER_IP} sudo docker rm -f ${FRONTEND_REPO_NAME}-${BRANCH_NAME} || true"
                     sh "ssh ubuntu@${DEPLOY_SERVER_IP} sudo docker rm -f ${BACKEND_REPO_NAME}-${BRANCH_NAME} || true"
                     sh "ssh ubuntu@${DEPLOY_SERVER_IP} sudo docker images -a -q | xargs docker rmi -f || true"
@@ -55,18 +55,17 @@ pipeline {
             }
         }
     }
- /*
+
     post {
         success {
-            emailext body: 'build gets successfully triggered ', subject: 'jenkins build triggered', to: 'abhishek.namdev.cn@gmail.com'
+            emailext body: 'Build succeeded. Your custom message here.',
+                     subject: 'Jenkins Build Success Notification',
+                     to: "${EMAIL_ADD}"
         }
         failure {
-            emailext body: 'build got failed ', subject: 'jenkins build triggered', to: 'abhishek.namdev.cn@gmail.com'
-        }
- */
-      post {
-          always {
-            emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
+            emailext body: 'Build failed. Your custom message here.',
+                     subject: 'Jenkins Build Failure Notification',
+                     to: "${EMAIL_ADD}"
         }
     }
 }
