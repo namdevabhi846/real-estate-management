@@ -55,13 +55,18 @@ pipeline {
             }
         }
     }
-
+ /*
     post {
         success {
             emailext body: 'build gets successfully triggered ', subject: 'jenkins build triggered', to: 'abhishek.namdev.cn@gmail.com'
         }
         failure {
             emailext body: 'build got failed ', subject: 'jenkins build triggered', to: 'abhishek.namdev.cn@gmail.com'
+        }
+ */
+      post {
+          always {
+            emailext body: 'A Test EMail', recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']], subject: 'Test'
         }
     }
 }
