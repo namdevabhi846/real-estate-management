@@ -9,8 +9,7 @@ pipeline {
         BACKEND_REPO_NAME="abhi-backend"
         FRONTEND_REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${FRONTEND_REPO_NAME}"
         BACKEND_REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${BACKEND_REPO_NAME}"
-        DEPLOY_SERVER_IP="13.202.47.31"
-        # EMAIL_ADD = "abhishek.namdev.cn@gmail.com"
+        DEPLOY_SERVER_IP= "13.202.47.31"
     }
 
     stages {
