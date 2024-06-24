@@ -10,7 +10,7 @@ pipeline {
         FRONTEND_REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${FRONTEND_REPO_NAME}"
         BACKEND_REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${BACKEND_REPO_NAME}"
         DEPLOY_SERVER_IP="13.202.47.31"
-        EMAIL_ADD = "abhishek.namdev.cn@gmail.com"
+        # EMAIL_ADD = "abhishek.namdev.cn@gmail.com"
     }
 
     stages {
@@ -58,12 +58,12 @@ pipeline {
 
     post {
         success {
-            mail to: "${EMAIL_ADD}",
+            mail to: "abhishek.namdev.cn@gmail.com",
                  subject: "Jenkins Build Successful:",
                  body: "The build for "real-estate-project" was runs successful. Check it out "
         }
         failure {
-            mail to: "${EMAIL_ADD}",
+            mail to: "abhishek.namdev.cn@gmail.com",
                  subject: "Jenkins Build Failed:",
                  body: "Somehow, the build for "real-estate-project" has failed. Check it out."
         }
