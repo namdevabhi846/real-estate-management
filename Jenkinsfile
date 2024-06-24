@@ -56,16 +56,26 @@ pipeline {
         }
     }
 
-    post {
-        success {
-            emailext body: 'Build succeeded. Your custom message here.',
-                     subject: 'Jenkins Build Success Notification',
-                     to: "${EMAIL_ADD}"
+   post {
+    success {
+        script {
+            echo 'Sending success email...'
         }
-        failure {
-            emailext body: 'Build failed. Your custom message here.',
-                     subject: 'Jenkins Build Failure Notification',
-                     to: "${EMAIL_ADD}"
+        emailext body: 'Build succeeded. Your custom message here.',
+                 subject: 'Jenkins Build Success Notification',
+                 to: "${EMAIL_ADD}"
+    }
+    failure {
+        script {
+            echo 'Sending failure email...'
         }
+        emailext body: 'Build failed. Your custom message here.',
+                 subject: 'Jenkins Build Failure Notification',
+                 to: "${EMAIL_ADD}"
     }
 }
+}
+
+
+
+    
