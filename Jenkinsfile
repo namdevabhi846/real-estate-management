@@ -9,7 +9,7 @@ pipeline {
         BACKEND_REPO_NAME="abhi-backend"
         FRONTEND_REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${FRONTEND_REPO_NAME}"
         BACKEND_REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${BACKEND_REPO_NAME}"
-        DEPLOY_SERVER_IP= "13.202.47.31"
+        DEPLOY_SERVER_IP="13.202.47.31"
     }
 
     stages {
@@ -52,19 +52,6 @@ pipeline {
                     sh "ssh ubuntu@${DEPLOY_SERVER_IP} sudo docker run -itd --name ${BACKEND_REPO_NAME}-${BRANCH_NAME} -p 8000:8000 --restart always ${BACKEND_REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha}"
                 }
             }
-        }
-    }
-
-    post {
-        success {
-            mail to: "abhishek.namdev.cn@gmail.com",
-                 subject: "Jenkins Build Successful:",
-                 body: "The build for real-estate-project was runs successful. Check it out "
-        }
-        failure {
-            mail to: "abhishek.namdev.cn@gmail.com",
-                 subject: "Jenkins Build Failed:",
-                 body: "Somehow, the build for real-estate-project has failed. Check it out."
         }
     }
 }
