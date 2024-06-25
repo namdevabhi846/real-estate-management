@@ -10,7 +10,6 @@ pipeline {
         FRONTEND_REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${FRONTEND_REPO_NAME}"
         BACKEND_REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${BACKEND_REPO_NAME}"
         DEPLOY_SERVER_IP = "13.202.47.31"
-        EMAIL_ADD = "123megha1234@gmail.com"
     }
 
     stages {
@@ -56,26 +55,22 @@ pipeline {
         }
     }
 
-   post {
-    success {
-        script {
-            echo 'Sending success email...'
+    post {
+        always {
+            emailext (
+                subject: "Pipeline Status: ${BUILD_NUMBER}",
+                body: '''<html>
+                            <body>
+                                <p>Build Status: ${BUILD_STATUS}</p>
+                                <p>Build Number: ${BUILD_NUMBER}</p>
+                                <p>Check the <a href="${BUILD_URL}">console output</a>.</p>
+                            </body>
+                         </html>''',
+                to: 'abhishek.namdev.cn@gmail.com',
+                from: 'jenkins@example.com',
+                replyTo: 'jenkins@example.com',
+                mimeType: 'text/html'
+            )
         }
-        emailext body: 'Build succeeded. Your custom message here.',
-                 subject: 'Jenkins Build Success Notification',
-                 to: "${EMAIL_ADD}"
-    }
-    failure {
-        script {
-            echo 'Sending failure email...'
-        }
-        emailext body: 'Build failed. Your custom message here.',
-                 subject: 'Jenkins Build Failure Notification',
-                 to: "${EMAIL_ADD}"
     }
 }
-}
-
-
-
-    
