@@ -49,7 +49,7 @@ pipeline {
                     sh "ssh ubuntu@${DEPLOY_SERVER_IP} sudo docker rm -f ${BACKEND_REPO_NAME}-${BRANCH_NAME} || true"
                     sh "ssh ubuntu@${DEPLOY_SERVER_IP} sudo docker images -a -q | xargs docker rmi -f || true"
                     sh "ssh ubuntu@${DEPLOY_SERVER_IP} sudo docker run -itd --name ${FRONTEND_REPO_NAME}-${BRANCH_NAME} -p 4200:4200 --restart always ${FRONTEND_REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha}"
-                    sh "ssh ubuntu@${DEPLOY_SERVER_IP} sudo docke run -itd --name ${BACKEND_REPO_NAME}-${BRANCH_NAME} -p 8000:8000 --restart always ${BACKEND_REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha}"
+                    sh "ssh ubuntu@${DEPLOY_SERVER_IP} sudo docker run -itd --name ${BACKEND_REPO_NAME}-${BRANCH_NAME} -p 8000:8000 --restart always ${BACKEND_REPOSITORY_URI}:${BRANCH_NAME}-${env.git_commit_sha}"
                 }
             }
         }
